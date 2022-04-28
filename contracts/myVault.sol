@@ -11,29 +11,32 @@ import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
-import '@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol';
+import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol'; //used to carry out swap
+import '@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol'; 
 
 // EACAggregatorProxy is used for chainlink oracle
+// Gets the prrice feed of the ethereum
 interface EACAggregatorProxy {
   function latestAnswer() external view returns (int256);
 }
 
 // Uniswap v3 interface
+// returns any leftover eth from Uniswap transactions
 interface IUniswapRouter is ISwapRouter {
   function refundETH() external payable;
 }
 
 // Add deposit function for WETH
+// depoist function for converting eth to 
 interface DepositableERC20 is IERC20 {
   function deposit() external payable;
 }
 
 contract myVault {
   uint public version = 1;
-  /* Kovan Addresses */
-  address public daiAddress = 0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa;
-  address public wethAddress = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
+
+  address public daiAddress = 0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa;
+  address public wethAddress = 0xc778417E063141139Fce010982780140Aa0cD5Ab;
   address public uinswapV3QuoterAddress = 0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6;
   address public uinswapV3RouterAddress = 0xE592427A0AEce92De3Edee1F18E0157C05861564;
   address public chainLinkETHUSDAddress = 0x9326BFA02ADD2366b30bacB125260Af641031331;
